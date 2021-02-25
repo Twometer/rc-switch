@@ -54,6 +54,15 @@
     #define VAR_ISR_ATTR
 #endif
 
+// Detect the Attiny13 MicroCore environment
+#ifdef core_settings_h
+	void delayMicroseconds_patched(int us) {
+		for (int i = 0; i < us; i++)
+			delayMicroseconds(1);
+	}
+
+	#define delayMicroseconds delayMicroseconds_patched
+#endif
 
 /* Format for protocol definitions:
  * {pulselength, Sync bit, "0" bit, "1" bit, invertedSignal}
